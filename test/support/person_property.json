@@ -1,0 +1,4 @@
+{
+	"@odata.context": "serviceRoot/$metadata#Airports('KSFO')/Name",
+	"value": "San Francisco International Airport"
+}
