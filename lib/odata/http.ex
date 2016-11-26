@@ -12,7 +12,9 @@ defmodule OData.HTTP do
   @spec get(Request.t) :: Response.t
   def get(%{url: url, headers: headers, query: %{params: params, service_root: root, entity: entity}}) do
     opts = [timeout: :infinity, recv_timeout: :infinity, ssl: [versions: [:"tlsv1.2"]]]
-    case Enum.count(params) do
+    params
+    |> Enum.count
+    |> case do
       0 ->
         "#{url}/#{root}/#{entity}"
       _ ->
@@ -22,7 +24,6 @@ defmodule OData.HTTP do
           |> Enum.map(fn {k, v} -> {"$#{k}", v} end)
         "#{url}/#{root}/#{entity}?#{URI.encode_query(params)}"
     end
-    |> IO.inspect
     |> HTTPoison.get(headers, opts)
     |> Response.build
   end

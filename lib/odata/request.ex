@@ -5,7 +5,7 @@ defmodule OData.Request do
   """
 
   alias __MODULE__
-  alias OData.Response
+  alias OData.{Response, HTTP}
 
   defstruct url: nil,
     query: nil,
@@ -33,7 +33,7 @@ defmodule OData.Request do
   """
   @spec call(Request.t) :: {atom, String.t} | {atom, Response.t}
   def call(request) do
-    OData.HTTP.get(request)
+    HTTP.get(request)
   end
 
 end

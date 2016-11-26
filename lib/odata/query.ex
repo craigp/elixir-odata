@@ -37,16 +37,16 @@ defmodule OData.Query do
   Sets the query limit.
   """
   @spec top(Query.t, integer) :: Query.t
-  def top(%Query{params: params} = query, limit) do
-    Map.put(query, :params, %{params | top: limit})
+  def top(%Query{} = query, limit) do
+    set_params(query, top: limit)
   end
 
   @doc """
   Sets the query offset.
   """
   @spec skip(Query.t, integer) :: Query.t
-  def skip(%Query{params: params} = query, offset) do
-    Map.put(query, :params, %{params | skip: offset})
+  def skip(%Query{} = query, offset) do
+    set_params(query, skip: offset)
   end
 
   @doc """
@@ -55,7 +55,6 @@ defmodule OData.Query do
   @spec set_params(Query.t, Keyword.t) :: Query.t
   def set_params(%Query{params: params} = query, new_params) when is_list(new_params) do
     new_params = new_params |> Keyword.take(~w(top skip)a) |> Enum.into(%{})
-    IO.inspect new_params
     Map.put(query, :params, Map.merge(params, new_params))
   end
 
