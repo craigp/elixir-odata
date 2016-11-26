@@ -4,16 +4,20 @@ defmodule OData.HTTP do
   Makes HTTP requests to the OData service.
   """
 
-  alias OData.{Query, Response}
-  @headers %{"content-type" => "application/json"}
+  alias OData.{Request, Response}
 
   @doc """
   Make an HTTP GET request.
   """
-  @spec get(Query.t, String.t) :: Response.t
-  def get(query, url) do
+  @spec get(Request.t) :: Response.t
+  def get(%{url: url, headers: headers, query: %{params: params, service_root: root, entity: entity}}) do
     opts = [timeout: :infinity, recv_timeout: :infinity, ssl: [versions: [:"tlsv1.2"]]]
-    HTTPoison.get(url, @headers, opts)
+    params =
+      params
+      |> Enum.filter(fn {_, v} -> v != nil end)
+      |> Enum.map(fn {k, v} -> {"$#{k}", v} end)
+    "#{url}/#{root}/#{entity}?#{URI.encode_query(params)}"
+    |> HTTPoison.get(headers, opts)
   end
 
 end

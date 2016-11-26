@@ -1,15 +1,17 @@
 defmodule OData.Query do
 
   @moduledoc """
-  Query helpers for OData services.
+  Construct queries for OData APIs.
   """
 
   alias __MODULE__
 
   defstruct service_root: nil,
     entity: nil,
-    top: nil,
-    skip: nil
+    params: %{
+      top: nil,
+      skip: nil
+    }
 
   @type t :: %__MODULE__{}
   @default_service_root "odata"
@@ -28,16 +30,16 @@ defmodule OData.Query do
   Sets the query limit.
   """
   @spec top(Query.t, integer) :: Query.t
-  def top(query, limit) do
-    Map.merge(query, %{top: limit})
+  def top(%{params: params} = query, limit) do
+    Map.put(query, :params, %{params | top: limit})
   end
 
   @doc """
   Sets the query offset.
   """
   @spec skip(Query.t, integer) :: Query.t
-  def skip(query, offset) do
-    Map.merge(query, %{skip: offset})
+  def skip(%{params: params} = query, offset) do
+    Map.put(query, :params, %{params | skip: offset})
   end
 
 end
