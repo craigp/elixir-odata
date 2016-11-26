@@ -1,24 +1,37 @@
-# OData
 
-**TODO: Add description**
+elixir-odata
+============
+[![Build Status](https://secure.travis-ci.org/craigp/elixir-odata.png?branch=master "Build Status")](http://travis-ci.org/craigp/elixir-odata)
+[![Coverage Status](https://coveralls.io/repos/craigp/elixir-odata/badge.svg?branch=master&service=github)](https://coveralls.io/github/craigp/elixir-odata?branch=master)
+[![hex.pm version](https://img.shields.io/hexpm/v/odata.svg)](https://hex.pm/packages/odata)
+[![hex.pm downloads](https://img.shields.io/hexpm/dt/odata.svg)](https://hex.pm/packages/odata)
+[![Inline docs](http://inch-ci.org/github/craigp/elixir-odata.svg?branch=master&style=flat)](http://inch-ci.org/github/craigp/elixir-odata)
 
-## Installation
+OData for Elixir, or something resembling it
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+You can find the hex package [here](https://hex.pm/packages/odata), and the docs [here](http://hexdocs.pm/odata).
 
-  1. Add `odata` to your list of dependencies in `mix.exs`:
+## Usage
 
-    ```elixir
-    def deps do
-      [{:odata, "~> 0.1.0"}]
-    end
-    ```
+First, add the client to your `mix.exs` dependencies:
 
-  2. Ensure `odata` is started before your application:
+```elixir
+def deps do
+  [{:odata, "~> 0.1"}]
+end
+```
 
-    ```elixir
-    def application do
-      [applications: [:odata]]
-    end
-    ```
+Then run `$ mix do deps.get, compile` to download and compile your dependencies.
+
+Finally, add the `:odata` application as your list of applications in `mix.exs`:
+
+```elixir
+def application do
+  [applications: [:logger, :odata]]
+end
+```
+
+## TODO
+
+* [ ] Everything
 
