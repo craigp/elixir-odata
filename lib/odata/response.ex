@@ -23,6 +23,8 @@ defmodule OData.Response do
         {:ok, %Response{value: value, next_link: next_link, context: context}}
       %{"value" => value, "@odata.context" => context} ->
         {:ok, %Response{value: value, context: context}}
+      %{"@odata.context" => context} = entity ->
+        {:ok, %Response{value: entity, context: context}}
     end
   end
 

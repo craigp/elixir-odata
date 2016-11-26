@@ -8,6 +8,7 @@ defmodule OData.Query do
 
   defstruct service_root: nil,
     entity: nil,
+    id: nil,
     params: %{
       top: nil,
       skip: nil
@@ -31,6 +32,14 @@ defmodule OData.Query do
       entity: entity,
       params: params
     })
+  end
+
+  @doc """
+  Sets the ID when getting a specific item.
+  """
+  @spec id(Query.t, any) :: Query.t
+  def id(%Query{} = query, entity_id) do
+    Map.put(query, :id, entity_id)
   end
 
   @doc """
