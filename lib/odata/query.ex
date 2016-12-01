@@ -16,6 +16,7 @@ defmodule OData.Query do
 
   @type t :: %__MODULE__{}
   @default_service_root "odata"
+  @valid_params ~w(top skip expand)a
 
   @doc """
   Builds a query for an OData source.
@@ -26,7 +27,7 @@ defmodule OData.Query do
   def build(entity), do: build(@default_service_root, entity)
   def build(service_root, entity), do: build(service_root, entity, [])
   def build(service_root, entity, params) do
-    params = params |> Keyword.take(~w(top skip)a) |> Enum.into(%{})
+    params = params |> Keyword.take(@valid_params) |> Enum.into(%{})
     struct(__MODULE__, %{
       service_root: service_root,
       entity: entity,
@@ -63,7 +64,7 @@ defmodule OData.Query do
   """
   @spec set_params(Query.t, Keyword.t) :: Query.t
   def set_params(%Query{params: params} = query, new_params) when is_list(new_params) do
-    new_params = new_params |> Keyword.take(~w(top skip)a) |> Enum.into(%{})
+    new_params = new_params |> Keyword.take(@valid_params) |> Enum.into(%{})
     Map.put(query, :params, Map.merge(params, new_params))
   end
 
