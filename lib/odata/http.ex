@@ -21,17 +21,7 @@ defmodule OData.HTTP do
     }
   }) do
     params
-    |> Enum.count
-    |> case do
-      0 ->
-        "#{url}/#{root}/#{entity}"
-      _ ->
-        params =
-          params
-          |> Enum.filter(fn {_, v} -> v != nil end)
-          |> Enum.map(fn {k, v} -> {"$#{k}", v} end)
-        "#{url}/#{root}/#{entity}?#{URI.encode_query(params)}"
-    end
+    |> build_url(url, entity, root)
     |> get_url(headers)
   end
 
@@ -45,6 +35,26 @@ defmodule OData.HTTP do
     }
   }) do
     get_url("#{url}/#{root}/#{entity}(#{id})", headers)
+  end
+
+  @spec build_url(map, String.t, String.t, String.t) :: String.t
+  defp build_url(params, url, entity, root)
+  when is_map(params)
+  and is_binary(url)
+  and is_binary(entity)
+  and is_binary(root) do
+    if Enum.empty?(params) do
+      "#{url}/#{root}/#{entity}"
+    else
+      "#{url}/#{root}/#{entity}?#{URI.encode_query(map_params(params))}"
+    end
+  end
+
+  @spec map_params(map) :: map
+  def map_params(params) do
+    params
+    |> Enum.filter(fn {_, v} -> v != nil end)
+    |> Enum.map(fn {k, v} -> {"$#{k}", v} end)
   end
 
   @spec get_url(String.t, map) :: Response.t

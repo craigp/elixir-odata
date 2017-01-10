@@ -6,11 +6,11 @@ defmodule OData.Mixfile do
      version: "0.1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
+     deps: deps(),
      test_coverage: [tool: ExCoveralls],
      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test],
      description: "OData for Elixir, or something resembling it",
-     package: package]
+     package: package()]
   end
 
   def application do
