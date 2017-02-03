@@ -16,7 +16,7 @@ defmodule OData.Query do
 
   @type t :: %__MODULE__{}
   @default_service_root "odata"
-  @valid_params ~w(top skip expand)a
+  @valid_params ~w(top skip expand select filter)a
 
   @doc """
   Builds a query for an OData source.
