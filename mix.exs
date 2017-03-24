@@ -3,7 +3,7 @@ defmodule OData.Mixfile do
 
   def project do
     [app: :odata,
-     version: "0.1.3",
+     version: "0.1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
@@ -21,7 +21,7 @@ defmodule OData.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.10"},
-      {:poison, "~> 2.2 or ~> 3.0"},
+      {:poison, "~> 2.2 or ~> 3.1"},
       {:excoveralls, "~> 0.5", only: :test},
       {:earmark, "~> 1.0", only: :dev},
       {:ex_doc, "~> 0.13", only: :dev},
