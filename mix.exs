@@ -15,7 +15,7 @@ defmodule OData.Mixfile do
 
   def application do
     [applications: [:logger, :httpoison, :poison],
-     mod: {OData, []}]
+     mod: {OData.Application, []}]
   end
 
   defp deps do

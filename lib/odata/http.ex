@@ -60,9 +60,19 @@ defmodule OData.HTTP do
   @spec get_url(String.t, map) :: Response.t
   defp get_url(url, headers) do
     opts = [timeout: :infinity, recv_timeout: :infinity, ssl: [versions: [:"tlsv1.2"]]]
-    url
-    |> HTTPoison.get(headers, opts)
-    |> Response.build
+    case HTTPoison.get(url, headers, opts) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        body = %{
+          "$id" => "1",
+          "Message" => "An error has occurred.",
+          "ErrorCode" => "KN00"
+        } |> Poison.encode!
+        Response.build(body)
+      {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
+        {:error, {:status, code, body}}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, {:http, reason}}
+    end
   end
 
 end
