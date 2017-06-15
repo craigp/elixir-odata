@@ -3,19 +3,18 @@ defmodule OData.Mixfile do
 
   def project do
     [app: :odata,
-     version: "0.1.5",
+     version: "0.1.6",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
      test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test],
+     preferred_cli_env: [
+       "coveralls": :test,
+       "coveralls.detail": :test,
+       "coveralls.post": :test
+     ],
      description: "OData for Elixir, or something resembling it",
      package: package()]
-  end
-
-  def application do
-    [applications: [:logger, :httpoison, :poison],
-     mod: {OData.Application, []}]
   end
 
   defp deps do
@@ -27,6 +26,7 @@ defmodule OData.Mixfile do
       {:ex_doc, "~> 0.13", only: :dev},
       {:dialyxir, "~> 0.3", only: :dev},
       {:credo, "~> 0.3", only: :dev},
+      {:dogma, "~> 0.1", only: :dev},
       {:bypass, "~> 0.1", only: :test},
       {:inch_ex, "~> 0.5", only: :docs}
     ]

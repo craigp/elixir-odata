@@ -39,31 +39,26 @@ defmodule OData.Query do
   Sets the ID when getting a specific item.
   """
   @spec id(Query.t, any) :: Query.t
-  def id(%Query{} = query, entity_id) do
-    Map.put(query, :id, entity_id)
-  end
+  def id(%Query{} = query, entity_id), do: Map.put(query, :id, entity_id)
 
   @doc """
   Sets the query limit.
   """
   @spec top(Query.t, integer) :: Query.t
-  def top(%Query{} = query, limit) do
-    set_params(query, top: limit)
-  end
+  def top(%Query{} = query, limit), do: set_params(query, top: limit)
 
   @doc """
   Sets the query offset.
   """
   @spec skip(Query.t, integer) :: Query.t
-  def skip(%Query{} = query, offset) do
-    set_params(query, skip: offset)
-  end
+  def skip(%Query{} = query, offset), do: set_params(query, skip: offset)
 
   @doc """
   Set the params for the query all at once, eg. top, skip.
   """
   @spec set_params(Query.t, Keyword.t) :: Query.t
-  def set_params(%Query{params: params} = query, new_params) when is_list(new_params) do
+  def set_params(%Query{params: params} = query, new_params)
+  when is_list(new_params) do
     new_params = new_params |> Keyword.take(@valid_params) |> Enum.into(%{})
     Map.put(query, :params, Map.merge(params, new_params))
   end

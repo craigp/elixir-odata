@@ -5,7 +5,6 @@ defmodule OData.Request do
   """
 
   alias __MODULE__
-  alias OData.{Response, HTTP}
 
   defstruct url: nil,
     query: nil,
@@ -16,24 +15,15 @@ defmodule OData.Request do
   @doc """
   Builds a request from a query and URL.
   """
-  def build(query, url) do
-    %Request{url: url, query: query}
-  end
+  @spec build(String.t, String.t) :: Request.t
+  def build(query, url), do: %Request{url: url, query: query}
 
   @doc """
   Adds HTTP headers to the request.
   """
-  @spec add_header(map, {String.t, String.t}) :: Request.t
-  def add_header(%{headers: headers} = request, {key, val}) do
+  @spec add_header(Request.t, {String.t, String.t}) :: Request.t
+  def add_header(%Request{headers: headers} = request, {key, val}) do
     %Request{request | headers: Map.put(headers, key, val)}
-  end
-
-  @doc """
-  Calls the OData API.
-  """
-  @spec call(Request.t) :: {atom, String.t} | {atom, Response.t}
-  def call(request) do
-    HTTP.get(request)
   end
 
 end

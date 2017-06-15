@@ -23,14 +23,6 @@ end
 
 Then run `$ mix do deps.get, compile` to download and compile your dependencies.
 
-Finally, add the `:odata` application as your list of applications in `mix.exs`:
-
-```elixir
-def application do
-  [applications: [:logger, :odata]]
-end
-```
-
 ## TODO
 
 * [ ] Everything

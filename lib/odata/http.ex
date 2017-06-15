@@ -4,12 +4,13 @@ defmodule OData.HTTP do
   Makes HTTP requests to the OData service.
   """
 
-  alias OData.{Request, Response, Query}
+  alias OData.{Request, Query}
 
   @doc """
   Make an HTTP GET request.
   """
-  @spec get(Request.t) :: Response.t
+  @spec get(Request.t) ::
+    {:ok, HTTPoison.Response.t} | {:error, HTTPoison.Error.t}
   def get(%Request{
     url: url,
     headers: headers,
@@ -50,24 +51,19 @@ defmodule OData.HTTP do
     end
   end
 
-  @spec map_params(map) :: map
-  def map_params(params) do
+  @spec map_params(map) :: list
+  defp map_params(params) when is_map(params) do
     params
     |> Enum.filter(fn {_, v} -> v != nil end)
     |> Enum.map(fn {k, v} -> {"$#{k}", v} end)
   end
 
-  @spec get_url(String.t, map) :: Response.t
+  @spec get_url(String.t, map) ::
+    {:ok, HTTPoison.Response.t} | {:error, HTTPoison.Error.t}
   defp get_url(url, headers) do
-    opts = [timeout: :infinity, recv_timeout: :infinity, ssl: [versions: [:"tlsv1.2"]]]
-    case HTTPoison.get(url, headers, opts) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Response.build(body)
-      {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
-        {:error, {:status, code, body}}
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, {:http, reason}}
-    end
+    opts = [timeout: :infinity, recv_timeout: :infinity,
+      ssl: [versions: [:"tlsv1.2"]]]
+    HTTPoison.get(url, headers, opts)
   end
 
 end
