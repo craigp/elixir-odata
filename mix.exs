@@ -3,7 +3,7 @@ defmodule OData.Mixfile do
 
   def project do
     [app: :odata,
-     version: "0.1.7",
+     version: "0.1.8",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
